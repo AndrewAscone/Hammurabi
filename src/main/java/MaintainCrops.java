@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class MaintainCrops {
     public static Scanner scanner = new Scanner(System.in);
 
-    public static int askHowManyAcresToPlant(int population, int acresOwned) {
+    public static int askHowManyAcresToPlant(int population, int acresOwned, int bushelsOwned) {
 
         System.out.print(   "\nEach acre takes one bushel. Each citizen can till at most 10 acres of land." +
                             "\nEnter the amount of acres you wish to plant with bushels: ");
@@ -14,22 +14,29 @@ public class MaintainCrops {
             System.out.println("[NOTICE] No acres were planted with bushels of grain this year.");
             return 0;
         }
-        // if have enough acres, but not enough "man power"
-        if((amountToPlant > (population * 10)) && (amountToPlant <= acresOwned)) {
-            System.out.println("[NOTICE] You're planting too much. You only have " + population +" people to tend the fields.");
-            return askHowManyAcresToPlant(population, acresOwned);
+        // if you have enough bushels
+        if(amountToPlant <= bushelsOwned) {
+            // if you have enough acres, but not enough "man power"
+            if ((amountToPlant > (population * 10)) && (amountToPlant <= acresOwned)) {
+                System.out.println("[NOTICE] You're planting too much. You only have " + population + " people to tend the fields.");
+                return askHowManyAcresToPlant(population, acresOwned, bushelsOwned);
+            }
+            //if you have enough "man power", but not enough acres
+            if ((amountToPlant <= (population * 10)) && (amountToPlant > acresOwned)) {
+                System.out.println("[NOTICE] You don't have enough land. You only own " + acresOwned + " acres.");
+                return askHowManyAcresToPlant(population, acresOwned, bushelsOwned);
+            }
+            //if you have enough people AND land
+            if ((amountToPlant <= (population * 10)) && (amountToPlant <= acresOwned)) {
+                System.out.println("[NOTICE] You are able to plant " + amountToPlant + " acres with bushels of grain.");
+                return amountToPlant;
+            }
         }
-        //if you have enough "man power", but not enough acres
-        if ((amountToPlant <= (population * 10)) && (amountToPlant > acresOwned)) {
-            System.out.println("[NOTICE] You don't have enough land. You only own " + acresOwned + " acres.");
-            return askHowManyAcresToPlant(population, acresOwned);
-        }
-        //if you have enough people AND land
-        if ((amountToPlant <= (population * 10)) && (amountToPlant <= acresOwned)) {
-            System.out.println("[NOTICE] You are able to plant " + amountToPlant + " acres with bushels of grain.");
-            return amountToPlant;
+        if(amountToPlant > bushelsOwned){
+            System.out.println("[NOTICE] You only have " + bushelsOwned + " bushels to plant!");
+            return askHowManyAcresToPlant(population, acresOwned, bushelsOwned);
         } else {
-            System.out.println("[NOTICE] Your code broke at: Acres to Plant");
+            System.out.println("[ERROR] Program broke at taking in acres to plant!");
             return 0;
         }
     }
@@ -45,7 +52,7 @@ public class MaintainCrops {
         return rand.nextInt(6) + 1; //return num of bushels harvested
     }
 
-    public static int getHarvest(int amountToPlant, int harvestRate) { //multiply
+    public static int getHarvest(int amountToPlant, int harvestRate) {
 
         return amountToPlant * harvestRate;
     }

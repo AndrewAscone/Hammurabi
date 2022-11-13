@@ -7,7 +7,7 @@ public class Hammurabi {
 
         //Starting inventory
         int bushelsOwned = 3000;
-        int population = 103;
+        int population = 100;
         int acresOwned = 1000;
 
         //Starting conditions
@@ -50,7 +50,7 @@ public class Hammurabi {
                                     acresTradeCost);
 
                 // Prompts Planting & calculates
-                int amountToPlant = MaintainCrops.askHowManyAcresToPlant(population, acresOwned);
+                int amountToPlant = MaintainCrops.askHowManyAcresToPlant(population, acresOwned, bushelsOwned);
                 bushelsOwned = MaintainCrops.updateBushels(bushelsOwned, amountToPlant);
 
                 // Runs RNG "Plague" and updates if true
@@ -75,8 +75,8 @@ public class Hammurabi {
                 bushelsOwned = MaintainCrops.addHarvest(bushelsOwned, harvested);
 
                 // Runs RNG "Rats" and updates if true
-                //bushelsEatenedByRats = UnnaturalDisasters.bushelsEatenByRats(bushelsOwned);
-                //bushelsOwned = UnnaturalDisasters.updateBushels(bushelsOwned, bushelsEatenedByRats);
+                bushelsEatenedByRats = UnnaturalDisasters.bushelsEatenByRats(bushelsOwned);
+                bushelsOwned = UnnaturalDisasters.updateBushels(bushelsOwned, bushelsEatenedByRats);
 
                 // Runs RNG new trade cost for acres for next year
                 acresTradeCost = TradingLand.newCostOfLand();
@@ -93,7 +93,7 @@ public class Hammurabi {
                                        int bushelsOwned, int acresOwned, int population,
                                        int acresTradeCost) {
 
-        System.out.println( "--------------------------------------------" +
+        System.out.println( "----------------------------------------------------------------------" +
                             "\nWelcome to Year " + yearCount +
                             "\n[Previous Year " + (yearCount - 1) + " Recap]" +
                             "\nDeaths from starvation: " + starvationDeaths +

@@ -2,12 +2,9 @@ import java.util.Random;
 import java.util.Scanner;
 public class TradingLand {
     public static Scanner scanner = new Scanner(System.in);
-
-    public static int landBought = 0;
-
-    public static int landSold = 0;
-
     public static int buyOrSellChoice = 0;
+    public static int landBought = 0;
+    public static int landSold = 0;
     public static int askBuyOrSellAcres(int acresOwned, int acresTradeCost, int bushelsOwned) {
 
         System.out.print(   "\n1. Buy Acres" +
@@ -61,15 +58,13 @@ public class TradingLand {
         int acresToSell = landSold;
 
         if(buyOrSellChoice == 1){
-        return acresOwned = acresOwned + acresToBuy;
+        return acresOwned = acresOwned + landBought;
         }
 
         else if(buyOrSellChoice == 2){
-        return acresOwned = acresOwned - acresToSell;
+        return acresOwned = acresOwned - landSold;
         }
-
         return acresOwned;
-
     }
     public static int updateBushels(int bushelsOwned, int acresBuySell, int acresTradeCost) {
         int acresToBuy = landBought;
@@ -78,11 +73,9 @@ public class TradingLand {
         if(buyOrSellChoice == 1){
             return bushelsOwned = bushelsOwned - (acresBuySell * acresTradeCost);
         }
-
         else if(buyOrSellChoice == 2){
             return bushelsOwned = bushelsOwned + (acresBuySell * acresTradeCost);
         }
-
         return bushelsOwned;
     }
     public static int newCostOfLand() {

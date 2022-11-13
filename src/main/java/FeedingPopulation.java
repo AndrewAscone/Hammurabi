@@ -2,8 +2,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class FeedingPopulation {
-
-    Random rand = new Random();
     public static Scanner scanner = new Scanner(System.in);
     public static int askHowMuchGrainToFeedPeople(int bushelsOwned, int bushelsToSurvive) {
 
@@ -21,7 +19,7 @@ public class FeedingPopulation {
     }
     public static int feedPopulationReturnDeaths(int population, int amountToFeed, int bushelsToSurvive) {
 
-        return population - (int) (Math.floor(amountToFeed / (bushelsToSurvive)));
+        return population - (int) (Math.floor(amountToFeed / bushelsToSurvive));
     }
 
     public static int updatePopulation(int population, int diedFromStarvation) {
