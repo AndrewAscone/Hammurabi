@@ -50,12 +50,12 @@ public class Hammurabi {
                                     acresTradeCost);
 
                 // Prompts Planting & calculates
-                int amountToPlant = MaintainCrops.askHowManyAcresToPlant(population, acresOwned);
+                int amountToPlant = MaintainCrops.askHowManyAcresToPlant(population, acresOwned, bushelsOwned);
                 bushelsOwned = MaintainCrops.updateBushels(bushelsOwned, amountToPlant);
 
                 // Runs RNG "Plague" and updates if true
-                plagueDeaths = UnnaturalDisasters.plagueDeaths(population);
-                population = UnnaturalDisasters.updatePopulation(population, plagueDeaths);
+                //plagueDeaths = UnnaturalDisasters.plagueDeaths(population);
+                //population = UnnaturalDisasters.updatePopulation(population, plagueDeaths);
 
                 // if starvation is over 45%, end game
                 if (FeedingPopulation.uprising(population, starvationDeaths)) {
@@ -72,7 +72,7 @@ public class Hammurabi {
                 // Generate harvest rate, calculate and update bushels for next year
                 harvestRate = MaintainCrops.harvestRate();
                 int harvested = MaintainCrops.getHarvest(amountToPlant, harvestRate);
-                bushelsOwned = MaintainCrops.addHarvest(bushelsOwned, harvestRate);
+                bushelsOwned = MaintainCrops.addHarvest(bushelsOwned, harvested);
 
                 // Runs RNG "Rats" and updates if true
                 bushelsEatenedByRats = UnnaturalDisasters.bushelsEatenByRats(bushelsOwned);
@@ -93,9 +93,9 @@ public class Hammurabi {
                                        int bushelsOwned, int acresOwned, int population,
                                        int acresTradeCost) {
 
-        System.out.println( "--------------------------------------------" +
+        System.out.println( "----------------------------------------------------------------------" +
                             "\nWelcome to Year " + yearCount +
-                            "\n[Previous Year Recap]" +
+                            "\n[Previous Year " + (yearCount - 1) + " Recap]" +
                             "\nDeaths from starvation: " + starvationDeaths +
                             "\nDeaths from plague: " + plagueDeaths +
                             "\nPopulation growth: " + immigrants +
