@@ -1,8 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
 public class TradingLand {
-
-    Random rand = new Random();
     public static Scanner scanner = new Scanner(System.in);
 
     public static int landBought = 0;
@@ -16,7 +14,6 @@ public class TradingLand {
                             "\n2. Sell Acres" +
                             "\n3. Skip" +
                             "\nEnter a number: ");
-        Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         buyOrSellChoice = choice;
 
@@ -59,7 +56,7 @@ public class TradingLand {
             return acresToSell;
         }
     }
-    public static int tradeAcres(int acresOwned, int acresBuySell) {
+    public static int tradeAcres(int acresOwned) {
         int acresToBuy = landBought;
         int acresToSell = landSold;
 

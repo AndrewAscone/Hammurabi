@@ -30,7 +30,7 @@ public class Hammurabi {
 
                 // Prompts Acres & calculates
                 int acresBuySell = TradingLand.askBuyOrSellAcres(acresOwned, acresTradeCost, bushelsOwned);
-                acresOwned = TradingLand.tradeAcres(acresOwned, acresBuySell);
+                acresOwned = TradingLand.tradeAcres(acresOwned);
                 bushelsOwned = TradingLand.updateBushels(bushelsOwned, acresBuySell, acresTradeCost);
 
                 // Menu with Acre updates
@@ -42,7 +42,7 @@ public class Hammurabi {
                 int amountToFeed = FeedingPopulation.askHowMuchGrainToFeedPeople(bushelsOwned, bushelsToSurvive);
                 starvationDeaths = FeedingPopulation.feedPopulationReturnDeaths(population, amountToFeed, bushelsToSurvive);
                 population = FeedingPopulation.updatePopulation(population, starvationDeaths);
-                bushelsOwned = FeedingPopulation.updateBushels(bushelsOwned, amountToFeed, bushelsToSurvive);
+                bushelsOwned = FeedingPopulation.updateBushels(bushelsOwned, amountToFeed);
 
                 // Menu with Feeding updates
                 getYearlyUpdate(    yearCount, starvationDeaths, immigrants, harvestRate, plagueDeaths, bushelsEatenedByRats,
@@ -63,7 +63,7 @@ public class Hammurabi {
                     break;
                 }
 
-                // if starvation is 0, generate immigrants
+                // if starvation is 0, generate "immigrants"
                 if (starvationDeaths == 0) {
                     immigrants = FeedingPopulation.immigrants(population, acresOwned, bushelsOwned);
                     population = FeedingPopulation.addImmigrants(population, immigrants);
