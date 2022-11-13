@@ -54,8 +54,8 @@ public class Hammurabi {
                 bushelsOwned = MaintainCrops.updateBushels(bushelsOwned, amountToPlant);
 
                 // Runs RNG "Plague" and updates if true
-                //plagueDeaths = UnnaturalDisasters.plagueDeaths(population);
-                //population = UnnaturalDisasters.updatePopulation(population, plagueDeaths);
+                plagueDeaths = UnnaturalDisasters.plagueDeaths(population);
+                population = UnnaturalDisasters.updatePopulation(population, plagueDeaths);
 
                 // if starvation is over 45%, end game
                 if (FeedingPopulation.uprising(population, starvationDeaths)) {
