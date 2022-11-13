@@ -25,56 +25,69 @@ public class Hammurabi {
         int bushelsEatenedByRats = 0;
 
         while (yearCount < 10) {
-
+                // Initial Menu
                 getYearlyUpdate(    yearCount, starvationDeaths, immigrants, harvestRate, plagueDeaths, bushelsEatenedByRats,
                                     bushelsOwned, acresOwned, population,
                                     acresTradeCost);
 
+                // Prompts Acres & calculates
                 int acresBuySell = TradingLand.askBuyOrSellAcres(acresOwned, acresTradeCost, bushelsOwned);
                 acresOwned = TradingLand.tradeAcres(acresOwned, acresBuySell);
                 bushelsOwned = TradingLand.updateBushels(bushelsOwned, acresBuySell, acresTradeCost);
 
+                // Menu with Acre updates
                 getYearlyUpdate(    yearCount, starvationDeaths, immigrants, harvestRate, plagueDeaths, bushelsEatenedByRats,
                                     bushelsOwned, acresOwned, population,
                                     acresTradeCost);
 
+                // Prompts Feeding & calculates
                 int amountToFeed = FeedingPopulation.askHowMuchGrainToFeedPeople(bushelsOwned, bushelsToSurvive);
                 starvationDeaths = FeedingPopulation.feedPopulationReturnDeaths(population, amountToFeed, bushelsToSurvive);
                 population = FeedingPopulation.updatePopulation(population, starvationDeaths);
-                bushelsOwned = FeedingPopulation.updateBushels(bushelsOwned, amountToFeed);
+                bushelsOwned = FeedingPopulation.updateBushels(bushelsOwned, amountToFeed, bushelsToSurvive);
 
+                // Menu with Feeding updates
                 getYearlyUpdate(    yearCount, starvationDeaths, immigrants, harvestRate, plagueDeaths, bushelsEatenedByRats,
                                     bushelsOwned, acresOwned, population,
                                     acresTradeCost);
 
+                // Prompts Planting & calculates
                 int amountToPlant = MaintainCrops.askHowManyAcresToPlanet(population, acresOwned);
                 bushelsOwned = MaintainCrops.updateBushels(bushelsOwned, amountToPlant);
 
+                // Runs RNG "Plague" and updates if true
                 plagueDeaths = UnnaturalDisasters.plagueDeaths(population);
                 population = UnnaturalDisasters.updatePopulation(population, plagueDeaths);
 
+                // if starvation is over 45%, end game
                 if (FeedingPopulation.uprising(population, starvationDeaths)) {
                     System.out.println("[GAME OVER] You have starved more than 45% of your population!");
                     break;
                 }
 
+                // if starvation is 0, generate immigrants
                 if (starvationDeaths == 0) {
                     immigrants = FeedingPopulation.immigrants(population, acresOwned, bushelsOwned);
                     population = FeedingPopulation.addImmigrants(population, immigrants);
                 }
 
+                // Generate harvest rate, calculate and update bushels for next year
                 harvestRate = MaintainCrops.harvestRate();
                 int harvested = MaintainCrops.getHarvest(amountToPlant, harvestRate);
                 bushelsOwned = MaintainCrops.addHarvest(bushelsOwned, harvestRate);
 
+                // Runs RNG "Rats" and updates if true
                 bushelsEatenedByRats = UnnaturalDisasters.bushelsEatenByRats(bushelsOwned);
                 bushelsOwned = UnnaturalDisasters.updateBushels(bushelsOwned, bushelsEatenedByRats);
 
+                // Runs RNG new trade cost for acres for next year
                 acresTradeCost = TradingLand.newCostOfLand();
 
+                // Increment year
                 yearCount++;
         }
 
+        //---- Final menu update ---
         getFinalUpdate();
     }
 

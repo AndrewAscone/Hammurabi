@@ -22,34 +22,37 @@ public class FeedingPopulation {
     }
     public static int feedPopulationReturnDeaths(int population, int amountToFeed, int bushelsToSurvive) {
 
-        return population - ((int) Math.floor(amountToFeed / bushelsToSurvive));
+        return ((int) Math.floor(amountToFeed / bushelsToSurvive));
     }
 
     public static int updatePopulation(int population, int diedFromStarvation) {
 
-        return 0;
+        return population - diedFromStarvation;
     }
 
-    public static int updateBushels(int bushelsOwned, int amountToFeed) {
+    public static int updateBushels(int bushelsOwned, int amountToFeed, int bushelsToSurvive) {
 
-        return 0;
+        return bushelsOwned -= amountToFeed;
     }
 
     public static boolean uprising(int population, int howManyPeopleStarved) {
         //Return true if more than 45% of the people starve.
         //(This will cause you to be immediately thrown out of office, ending the game.)
-        return true;
+        if (howManyPeopleStarved / population < 0.45) return true;
+        else return false;
     }
 
-    public static int immigrants(int population, int acresOwned, int grainInStorage) {
+    public static int immigrants(int population, int acresOwned, int bushelsOwned) {
         //Nobody will come to the city if people are starving (so don't call this method).
         // If everyone is well fed, compute how many people come to the city as:
         // (20 * _number of acres you have_ + _amount of grain you have in storage_) / (100 * _population_) + 1.
-        return 0;
+        if (true) {
+            return (20 * acresOwned + bushelsOwned) / (100 * population) + 1;
+        } else return 0;
     }
 
     public static int addImmigrants(int population, int immigrants) {
 
-        return  0;
+        return  population + immigrants;
     }
 }
