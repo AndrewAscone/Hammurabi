@@ -1,5 +1,3 @@
-import com.sun.tools.javac.Main;
-
 public class Hammurabi {
 
     public static void main(String[] args) {
@@ -52,7 +50,7 @@ public class Hammurabi {
                                     acresTradeCost);
 
                 // Prompts Planting & calculates
-                int amountToPlant = MaintainCrops.askHowManyAcresToPlanet(population, acresOwned);
+                int amountToPlant = MaintainCrops.askHowManyAcresToPlant(population, acresOwned);
                 bushelsOwned = MaintainCrops.updateBushels(bushelsOwned, amountToPlant);
 
                 // Runs RNG "Plague" and updates if true

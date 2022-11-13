@@ -18,4 +18,11 @@ public class FarmTest {
         int actual = 3;
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void harvestPerAcreTest(){
+        int actual = MaintainCrops.harvestRate();
+        System.out.println("EACH ACRE PRODUCED " + actual + " BUSHEL(S)");
+        Assert.assertTrue(actual >= 1 && actual <= 6);
+    }
 }
