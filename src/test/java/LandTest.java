@@ -18,4 +18,11 @@ public class LandTest {
         int actual = 1;
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void newCostOfLandTest(){
+        int actual = TradingLand.newCostOfLand();
+        Assert.assertTrue(actual >= 17 && actual <= 26);
+    }
+
 }
