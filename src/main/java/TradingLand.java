@@ -4,6 +4,12 @@ public class TradingLand {
 
     Random rand = new Random();
     public static Scanner scanner = new Scanner(System.in);
+
+    public static int landBought = 0;
+
+    public static int landSold = 0;
+
+    public static int buyOrSellChoice = 0;
     public static int askBuyOrSellAcres(int acresOwned, int acresTradeCost, int bushelsOwned) {
 
         System.out.print(   "\n1. Buy Acres" +
@@ -12,6 +18,7 @@ public class TradingLand {
                             "\nEnter a number: ");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
+        buyOrSellChoice = choice;
 
         if (choice == 1) return askHowManyAcresToBuy(acresTradeCost, bushelsOwned);
         if (choice == 2) return askHowManyAcresToSell(acresOwned);
@@ -34,6 +41,7 @@ public class TradingLand {
             return askHowManyAcresToBuy(acresTradeCost, bushelsOwned);
         } else {
             System.out.println("[NOTICE] You are able to buy " + acresToBuy + " acres of land.");
+            landBought = acresToBuy;
             return acresToBuy;
         }
     }
@@ -47,21 +55,46 @@ public class TradingLand {
             return askHowManyAcresToSell(acresOwned);
         } else {
             System.out.println("[NOTICE] You are able to sell " + acresToSell + " acres of land.");
-            return acresToSell * -1;
+            landSold = acresToSell;
+            return acresToSell;
         }
     }
     public static int tradeAcres(int acresOwned, int acresBuySell) {
+        int acresToBuy = landBought;
+        int acresToSell = landSold;
 
-        return 0;
+        if(buyOrSellChoice == 1){
+        return acresOwned = acresOwned + acresToBuy;
+        }
+
+        else if(buyOrSellChoice == 2){
+        return acresOwned = acresOwned - acresToSell;
+        }
+
+        return acresOwned;
+
     }
     public static int updateBushels(int bushelsOwned, int acresBuySell, int acresTradeCost) {
+        int acresToBuy = landBought;
+        int acresToSell = landSold;
 
-        return 0;
+        if(buyOrSellChoice == 1){
+            return bushelsOwned = bushelsOwned - (acresBuySell * acresTradeCost);
+        }
+
+        else if(buyOrSellChoice == 2){
+            return bushelsOwned = bushelsOwned + (acresBuySell * acresTradeCost);
+        }
+
+        return bushelsOwned;
     }
     public static int newCostOfLand() {
-
+        Random rand = new Random();
         //random rage of 17-23
+        int newTradePrice = rand.nextInt(9) + 17;
 
-        return 0; //return new price of land for next year
+        System.out.println("NEW LAND TRADING PRICE IS " + newTradePrice);
+
+        return newTradePrice; //return new price of land for next year
     }
 }
