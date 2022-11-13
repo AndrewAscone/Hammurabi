@@ -90,10 +90,8 @@ public class TradingLand {
     }
     public static int newCostOfLand() {
         Random rand = new Random();
-        //random rage of 17-23
+        //random rage of 17-26
         int newTradePrice = rand.nextInt(9) + 17;
-
-        System.out.println("NEW LAND TRADING PRICE IS " + newTradePrice);
 
         return newTradePrice; //return new price of land for next year
     }
