@@ -22,6 +22,7 @@ public class LandTest {
     @Test
     public void newCostOfLandTest(){
         int actual = TradingLand.newCostOfLand();
+        System.out.println("NEW LAND TRADING PRICE IS " + actual);
         Assert.assertTrue(actual >= 17 && actual <= 26);
     }
 
