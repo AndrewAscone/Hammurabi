@@ -5,33 +5,38 @@ public class MaintainCrops {
     public static Scanner scanner = new Scanner(System.in);
 
     public static int askHowManyAcresToPlant(int population, int acresOwned) {
-        //Hammurabi.getYearlyUpdate();
 
         System.out.print(   "\nEach acre takes one bushel. Each citizen can till at most 10 acres of land." +
                             "\nEnter the amount of acres you wish to plant with bushels: ");
-        int AmountToPlant = scanner.nextInt();
+        int amountToPlant = scanner.nextInt();
 
-        if((AmountToPlant > (population * 10)) && (AmountToPlant <= acresOwned)) {
+        if (amountToPlant == 0){
+            System.out.println("[NOTICE] No acres were planted with bushels of grain this year.");
+            return 0;
+        }
+        // if have enough acres, but not enough "man power"
+        if((amountToPlant > (population * 10)) && (amountToPlant <= acresOwned)) {
             System.out.println("[NOTICE] You're planting too much. You only have " + population +" people to tend the fields.");
             return askHowManyAcresToPlant(population, acresOwned);
         }
-        //Not working?
-        if ((AmountToPlant <= (population * 10)) && (AmountToPlant > acresOwned)) {
+        //if you have enough "man power", but not enough acres
+        if ((amountToPlant <= (population * 10)) && (amountToPlant > acresOwned)) {
             System.out.println("[NOTICE] You don't have enough land. You only own " + acresOwned + " acres.");
             return askHowManyAcresToPlant(population, acresOwned);
         }
-        if ((AmountToPlant <= (population * 10)) && (AmountToPlant <= acresOwned)) {
-            System.out.println("[NOTICE] You are able to plant " + AmountToPlant + " acres with bushels of grain.");
-            return AmountToPlant;
+        //if you have enough people AND land
+        if ((amountToPlant <= (population * 10)) && (amountToPlant <= acresOwned)) {
+            System.out.println("[NOTICE] You are able to plant " + amountToPlant + " acres with bushels of grain.");
+            return amountToPlant;
         } else {
-            System.out.println("[NOTICE] No acres were planted with bushels of grain this year.");
+            System.out.println("[NOTICE] Your code broke at: Acres to Plant");
             return 0;
         }
     }
 
     public static int updateBushels(int bushelsOwned, int AmountToPlant) {
 
-        return 0;
+        return bushelsOwned - AmountToPlant;
     }
 
     public static int harvestRate() {
@@ -42,11 +47,11 @@ public class MaintainCrops {
 
     public static int getHarvest(int amountToPlant, int harvestRate) { //multiply
 
-        return 0;
+        return amountToPlant * harvestRate;
     }
 
     public static int addHarvest(int bushelsOwned, int harvested) {
 
-        return 0;
+        return bushelsOwned + harvested;
     }
 }
