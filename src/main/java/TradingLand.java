@@ -2,7 +2,6 @@ import java.util.Random;
 import java.util.Scanner;
 public class TradingLand {
     public static Scanner scanner = new Scanner(System.in);
-
     public static int askBuyOrSellAcres(int acresOwned, int acresTradeCost, int bushelsOwned) {
 
         System.out.print(   "\n1. Buy Acres" +
