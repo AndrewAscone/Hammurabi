@@ -15,7 +15,7 @@ public class Hammurabi {
         int bushelsToSurvive = 20;
 
         //Yearly update
-        int yearCount = 8;
+        int yearCount = 8; // <-- change 3.0 in EndGameEval class to match
         int starvationDeaths = 0;
         int immigrants = 0;
         int harvestRate = 0;
@@ -25,6 +25,7 @@ public class Hammurabi {
         //End game info
         int totalDeaths = 0;
         double percentageStarved = 0;
+        double totalpercentageStarved = 0;
 
         System.out.println("Hammurabi, can you make it through 10 years?!");
 
@@ -37,7 +38,7 @@ public class Hammurabi {
 
             // Prompts Acres & calculates
             int acresBuySell = TradingLand.askBuyOrSellAcres(acresOwned, acresTradeCost, bushelsOwned);
-            acresOwned = TradingLand.tradeAcres(acresOwned);
+            acresOwned = TradingLand.tradeAcres(acresOwned, acresBuySell);
             bushelsOwned = TradingLand.updateBushels(bushelsOwned, acresBuySell, acresTradeCost);
 
             // Menu with Acre updates
@@ -48,9 +49,9 @@ public class Hammurabi {
 
             // Prompts Feeding & calculates
             int amountToFeed = FeedingPopulation.askHowMuchGrainToFeedPeople(bushelsOwned, bushelsToSurvive);
+            int populationWithoutDisasters = population;
             starvationDeaths = FeedingPopulation.feedPopulationReturnDeaths(population, amountToFeed, bushelsToSurvive);
             population = FeedingPopulation.updatePopulation(population, starvationDeaths);
-            int populationWithoutDisasters = population;
             bushelsOwned = FeedingPopulation.updateBushels(bushelsOwned, amountToFeed);
 
             // Menu with Feeding updates
@@ -64,8 +65,8 @@ public class Hammurabi {
             bushelsOwned = MaintainCrops.updateBushels(bushelsOwned, amountToPlant);
 
             // Runs RNG "Plague" and updates if true
-            plagueDeaths = UnnaturalDisasters.plagueDeaths(population);
-            population = UnnaturalDisasters.updatePopulation(population, plagueDeaths);
+            plagueDeaths = NaturalDisasters.plagueDeaths(population);
+            population = NaturalDisasters.updatePopulation(population, plagueDeaths);
 
             // if starvation is over 45%, end game
             if (FeedingPopulation.uprising(populationWithoutDisasters, starvationDeaths)) {
@@ -85,17 +86,16 @@ public class Hammurabi {
             bushelsOwned = MaintainCrops.addHarvest(bushelsOwned, harvested);
 
             // Runs RNG "Rats" and updates if true
-            bushelsEatenedByRats = UnnaturalDisasters.bushelsEatenByRats(bushelsOwned);
-            bushelsOwned = UnnaturalDisasters.updateBushels(bushelsOwned, bushelsEatenedByRats);
+            bushelsEatenedByRats = NaturalDisasters.bushelsEatenByRats(bushelsOwned);
+            bushelsOwned = NaturalDisasters.updateBushels(bushelsOwned, bushelsEatenedByRats);
 
             // Runs RNG new trade cost for acres for next year
             acresTradeCost = TradingLand.newCostOfLand();
 
             // Info for end game eval
             totalDeaths += starvationDeaths;
-            System.out.println("Total Death: " + totalDeaths);
-            percentageStarved += (starvationDeaths / population);
-            System.out.println("Total percentage starved: " +percentageStarved);
+            percentageStarved = starvationDeaths / (1.0 * populationWithoutDisasters);
+            totalpercentageStarved += percentageStarved;
 
             // Increment year
             yearCount++;
@@ -106,7 +106,7 @@ public class Hammurabi {
             EndGameEval.getFinalUpdate(yearCount, starvationDeaths, immigrants,
                     harvestRate, plagueDeaths, bushelsEatenedByRats,
                     bushelsOwned, acresOwned, population,
-                    totalDeaths, percentageStarved);
+                    totalDeaths, totalpercentageStarved);
         }
     }
 
@@ -118,10 +118,10 @@ public class Hammurabi {
         System.out.println( "Welcome to Year " + yearCount +
                 "\n[Previous Year Recap]" +
                 "\nDeaths from starvation: " + starvationDeaths +
-                "\nDeaths from unnatural disaster: " + plagueDeaths +
+                "\nDeaths from natural disaster: " + plagueDeaths +
                 "\nPopulation growth: " + immigrants +
                 "\nBushels of grains harvested per acre of land: " + harvestRate +
-                "\nBushels lost from unnatural disaster: " + bushelsEatenedByRats);
+                "\nBushels lost from natural disaster: " + bushelsEatenedByRats);
 
 
         System.out.println( "\n[Inventory]" +
