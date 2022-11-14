@@ -1,6 +1,5 @@
 import java.util.Random;
-public class UnnaturalDisasters {
-
+public class NaturalDisasters {
     public static int plagueDeaths(int population) {
         Random rand = new Random();
         int randPeopleDeath = rand.nextInt(100);
@@ -21,22 +20,16 @@ public class UnnaturalDisasters {
                 case 4:
                     disaster = "[NOTICE] A volcano erupted, killing half your population";
                     break;
-
-
                 //System.out.println("In plague death: " + (population/2) + " , w Round is " + Math.round(population/2));
-
-
-
             }
             System.out.println(disaster);
             return Math.round(population / 2);
             //15% chance each year that 1/2 your population dies
 
         }
-        System.out.println("[NOTICE] You've luckily avoided any disasters this year!");
+        System.out.println("[NOTICE] There have been no natural disasters this year!");
         return 0; //return num of deaths
     }
-
 
     public static int updatePopulation(int population, int plagueDeaths) {
 
@@ -46,7 +39,7 @@ public class UnnaturalDisasters {
     public static int bushelsEatenByRats(int bushelsOwned) {
         Random rand = new Random();
         int ratAttack = rand.nextInt(100);
-        double ratFeast = rand.nextInt(20) + 10;
+        double ratFeast = rand.nextInt(21) + 10; // 10 to 30 percent
 
         if(ratAttack <= 40) { // Percentage of occurring
             String bushelsLost = "";
@@ -69,10 +62,9 @@ public class UnnaturalDisasters {
             }
             System.out.println(bushelsLost);
             return eaten;
-
         }
 
-        System.out.println("[NOTICE] Nothing has claimed any of your bushels this year!");
+        System.out.println("[NOTICE] You have not lost any of your bushels this year!");
         return 0;
         //40% chance of rat infestation, if so 10-30% of grain will be eaten
         //return amount eaten

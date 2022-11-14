@@ -1,11 +1,12 @@
-public class EndGameEval {
 
+public class EndGameEval {
     public static void getFinalUpdate(int yearCount, int starvationDeaths, int immigrants,
                                       int harvestRate, int plagueDeaths, int bushelsEatenedByRats,
                                       int bushelsOwned, int acresOwned, int population,
-                                      int totalDeaths, double percentageStarved) {
+                                      int totalDeaths, double totalPercentageStarved) {
 
-        double acresPerPerson = acresOwned / population;
+        double acresPerPerson = acresOwned / (population * 1.0);
+        double perYearAvgPercentStarved = ((totalPercentageStarved / 3.0 ) * 100);
 
         System.out.println( "\nWelcome to Year " + yearCount +
                 "\n[Previous Year Recap]" +
@@ -22,28 +23,35 @@ public class EndGameEval {
 
         System.out.println("\nCongratulations! You have completed 10 years!");
 
-        System.out.println( "In your 10-year term of office, " + ((percentageStarved / 10) * 100) +
-                " percent of the population starved per year on average, .i.e., a total of" + totalDeaths +
-                " people died!");
+        System.out.printf("In your 10-year term of office, %.2f percent of the population starved per year on average.", perYearAvgPercentStarved);
 
-        System.out.println("You started with 10 acres per person and ended with " + acresPerPerson + "acres per person");
+        System.out.println("\nA total of " + totalDeaths + " people died!");
 
-        performanceStatement();
+        System.out.printf("You started with 10 acres per person and ended with %.2f acres per person", acresPerPerson);
+
+        performanceStatement(perYearAvgPercentStarved, acresPerPerson);
     }
-    public static void performanceStatement() {
+    public static void performanceStatement(double perYearAvgPercentStarved, double acresPerPerson) {
 
-        System.out.println("Hello!");
-        //if more than one third of the people starved to death or you don't have at least 7 acres per person.
-        //You are impeached and thrown out of office
+        if(perYearAvgPercentStarved >= 33
+                || acresPerPerson < 7) {
+            System.out.println("\nYou are impeached and thrown out of office!");
+        }
 
-        //if more than 10% of the people starved to death or you don't have at least 9 acres per person.
-        //You have completed a "Heavy-handed" performance
+        else if(perYearAvgPercentStarved >= 10 && perYearAvgPercentStarved < 33
+                || acresPerPerson < 9 && acresPerPerson >= 7) {
+            System.out.println("\nYou have completed a heavy-handed performance!");
+        }
 
-        //if more than 3% of the people starved to death or you don't have at least 10 acres per person.
-        //Your performance "could have been better"
+        else if(perYearAvgPercentStarved >= 3 && perYearAvgPercentStarved < 10
+                || acresPerPerson < 10 && acresPerPerson >= 9) {
+            System.out.println("\nYour performance could have been better...");
+        }
 
-        //Otherwise, fewer than 3% of the people starving to death and having ten or more acres per person.
-        //You've completed "A fantastic performance", with
+        else if (perYearAvgPercentStarved < 3
+               || acresPerPerson >= 10) {
+            System.out.println("\nA FANTASTIC PERFORMANCE!");
+        }
     }
 }
 
